@@ -1,0 +1,13 @@
+rootProject.name = 'kafka-toolage'
+
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+	}
+}
+
+include 'oauth-client'
+
+project(":oauth-client").projectDir = file('clusters/oauth/oauth-client')

@@ -1,0 +1,22 @@
+---
+
+networks:
+  default:
+    external: true
+    name: kafka-toolage
+
+services:
+  jumphost:
+    image: confluentinc/cp-kafka:7.2.0
+    hostname: jumphost
+    container_name: jumphost
+    healthcheck:
+      test: exit 0
+      start_period: 5s
+      interval: 5s
+      timeout: 5s
+      retries: 3
+    volumes:
+      - ./secrets:/etc/kafka/secrets
+      - ./scripts:/scripts
+    entrypoint: /bin/bash -c "sleep infinity"

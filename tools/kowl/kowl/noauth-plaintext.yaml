@@ -1,0 +1,27 @@
+kafka:
+  brokers:
+    - noauth-broker-1:9092
+    - noauth-broker-2:9092
+    - noauth-broker-3:9092
+
+  schemaRegistry:
+    enabled: true
+    urls:
+      - http://noauth-schema-registry:8081
+
+connect:
+  enabled: true
+  clusters:
+    - name: connect-a
+      url: http://noauth-connect-a:8083
+    - name: connect-b
+      url: http://noauth-connect-b:8083
+#       tls:
+#         enabled: false # Trusted certificates are still allowed if TLS is not enabled.
+#         # caFilepath:
+#         # certFilepath:
+#         # keyFilepath:
+#         # insecureSkipTlsVerify: false
+#       username:
+#       password: # This can be set via the via the --connect.clusters.i.password flag as well (i to be replaced with the array index)
+#       token: # This can be set via the via the --connect.clusters.i.token flag as well (i to be replaced with the array index)

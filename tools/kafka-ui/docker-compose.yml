@@ -1,0 +1,114 @@
+---
+
+networks:
+  default:
+    external: true
+    name: kafka-toolage
+
+volumes:
+  kafka-ui: {}
+
+services:
+  kafka-ui:
+    image: provectuslabs/kafka-ui:v0.4.0
+    container_name: kafka-ui
+    healthcheck:
+      test: curl --fail http://localhost:8080/ || exit 1
+      start_period: 10s
+      interval: 5s
+      timeout: 5s
+      retries: 3
+    volumes:
+      - kafka-ui:/tmp
+      - ./secrets:/etc/kafka/secrets/
+      #- ./kafka-auth0-1.0.0-all.jar:/kafka-auth0-1.0.0-all.jar
+      #- ./kafka-ui-api.jar:/kafka-ui-api.jar
+      - ./tmp/kafka-ui-api.jar:/kafka-ui-api.jar
+    ports:
+      - "9001:8080"
+    restart: always
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=noauth(plaintext)
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=noauth-broker-1:9092,noauth-broker-2:9092,noauth-broker-3:9092
+      - KAFKA_CLUSTERS_0_ZOOKEEPER=noauth-zookeeper:2181
+      - KAFKA_CLUSTERS_0_SCHEMAREGISTRY=http://noauth-schema-registry:8081
+      - KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME=a
+      - KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS=http://noauth-connect-a:8083
+      - KAFKA_CLUSTERS_0_KAFKACONNECT_1_NAME=b
+      - KAFKA_CLUSTERS_0_KAFKACONNECT_1_ADDRESS=http://noauth-connect-b:8083
+      - KAFKA_CLUSTERS_0_JMXPORT=5000
+      - KAFKA_CLUSTERS_1_NAME=noauth(ssl)
+      - KAFKA_CLUSTERS_1_BOOTSTRAPSERVERS=noauth-broker-1:9093,noauth-broker-2:9093,noauth-broker-3:9093
+      - KAFKA_CLUSTERS_1_PROPERTIES_SECURITY_PROTOCOL=SSL
+      - KAFKA_CLUSTERS_1_PROPERTIES_SSL_TRUSTSTORE_TYPE=JKS
+      - KAFKA_CLUSTERS_1_ZOOKEEPER=noauth-zookeeper:2181
+      - KAFKA_CLUSTERS_1_SCHEMAREGISTRY=http://noauth-schema-registry:8081
+      - KAFKA_CLUSTERS_1_KAFKACONNECT_0_NAME=a
+      - KAFKA_CLUSTERS_1_KAFKACONNECT_0_ADDRESS=http://noauth-connect-a:8083
+      - KAFKA_CLUSTERS_1_KAFKACONNECT_1_NAME=b
+      - KAFKA_CLUSTERS_1_KAFKACONNECT_1_ADDRESS=http://noauth-connect-b:8083
+      - KAFKA_CLUSTERS_2_NAME=sasl(plaintext)
+      - KAFKA_CLUSTERS_2_BOOTSTRAPSERVERS=sasl-broker-1:9092,sasl-broker-2:9092,sasl-broker-3:9092
+      - KAFKA_CLUSTERS_2_ZOOKEEPER=sasl-zookeeper:2181
+      - KAFKA_CLUSTERS_2_SCHEMAREGISTRY=https://sasl-schema-registry:8082
+      - KAFKA_CLUSTERS_2_SCHEMAREGISTRYAUTH_USERNAME=sr
+      - KAFKA_CLUSTERS_2_SCHEMAREGISTRYAUTH_PASSWORD=sr-secret
+      - KAFKA_CLUSTERS_2_PROPERTIES_SECURITY_PROTOCOL=SASL_PLAINTEXT
+      - KAFKA_CLUSTERS_2_PROPERTIES_SASL_MECHANISM=PLAIN
+      - KAFKA_CLUSTERS_2_PROPERTIES_SASL_JAAS_CONFIG=org.apache.kafka.common.security.plain.PlainLoginModule required username="kafka-admin" password="kafka-admin-secret";
+      - KAFKA_CLUSTERS_2_PROPERTIES_SCHEMA_REGISTRY_BASIC_AUTH_CREDENTIALS_SOURCE=USER_INFO
+      - KAFKA_CLUSTERS_2_PROPERTIES_SCHEMA_REGISTRY_BASIC_AUTH_USER_INFO=sr:sr-secret
+      - KAFKA_CLUSTERS_2_PROPERTIES_SSL_TRUSTSTORE_TYPE=JKS
+      - KAFKA_CLUSTERS_2_KAFKACONNECT_0_NAME=connect
+      - KAFKA_CLUSTERS_2_KAFKACONNECT_0_ADDRESS=https://sasl-connect-1:8083
+      - KAFKA_CLUSTERS_2_KAFKACONNECT_0_USERNAME=sr
+      - KAFKA_CLUSTERS_2_KAFKACONNECT_0_PASSWORD=sr-secret
+      - KAFKA_CLUSTERS_3_NAME=sasl(ssl)
+      - KAFKA_CLUSTERS_3_BOOTSTRAPSERVERS=sasl-broker-1:9093,sasl-broker-2:9093,sasl-broker-3:9093
+      - KAFKA_CLUSTERS_3_PROPERTIES_SECURITY_PROTOCOL=SASL_SSL
+      - KAFKA_CLUSTERS_3_PROPERTIES_SASL_MECHANISM=SCRAM-SHA-512
+      - KAFKA_CLUSTERS_3_PROPERTIES_SSL_TRUSTSTORE_LOCATION=/etc/kafka/secrets/kafka.server.truststore.jks
+      - KAFKA_CLUSTERS_3_PROPERTIES_SSL_TRUSTSTORE_PASSWORD=broker_secret
+      - KAFKA_CLUSTERS_3_ZOOKEEPER=sasl-zookeeper:2181
+      - KAFKA_CLUSTERS_3_SCHEMAREGISTRY=https://sasl-schema-registry:8082
+      - KAFKA_CLUSTERS_3_SCHEMAREGISTRYAUTH_USERNAME=sr
+      - KAFKA_CLUSTERS_3_SCHEMAREGISTRYAUTH_PASSWORD=sr-secret
+      - KAFKA_CLUSTERS_3_KAFKACONNECT_0_NAME=connect
+      - KAFKA_CLUSTERS_3_KAFKACONNECT_0_ADDRESS=https://sasl-connect-1:8083
+      - KAFKA_CLUSTERS_3_KAFKACONNECT_0_USERNAME=sr
+      - KAFKA_CLUSTERS_3_KAFKACONNECT_0_PASSWORD=sr-secret
+      - KAFKA_CLUSTERS_3_PROPERTIES_SASL_JAAS_CONFIG=org.apache.kafka.common.security.scram.ScramLoginModule required username="kafka-ui" password="kafka-ui-secret";
+      - KAFKA_CLUSTERS_3_PROPERTIES_SCHEMA_REGISTRY_BASIC_AUTH_CREDENTIALS_SOURCE=USER_INFO
+      - KAFKA_CLUSTERS_3_PROPERTIES_SCHEMA_REGISTRY_BASIC_AUTH_USER_INFO=sr:sr-secret
+      - KAFKA_CLUSTERS_3_PROPERTIES_SSL_TRUSTSTORE_TYPE=JKS
+      - KAFKA_CLUSTERS_4_NAME=ssl(ssl)
+      - KAFKA_CLUSTERS_4_BOOTSTRAPSERVERS=ssl-broker-1:9093,ssl-broker-2:9093,ssl-broker-3:9093
+      - KAFKA_CLUSTERS_4_ZOOKEEPER=ssl-zookeeper:2181
+      - KAFKA_CLUSTERS_4_SCHEMAREGISTRY=https://ssl-schema-registry:8082
+      - KAFKA_CLUSTERS_4_SCHEMAREGISTRYAUTH_USERNAME=sr
+      - KAFKA_CLUSTERS_4_SCHEMAREGISTRYAUTH_PASSWORD=sr-secret
+      - KAFKA_CLUSTERS_4_KAFKACONNECT_0_NAME=connect
+      - KAFKA_CLUSTERS_4_KAFKACONNECT_0_ADDRESS=https://ssl-connect:8083
+      - KAFKA_CLUSTERS_4_KAFKACONNECT_0_USERNAME=sr
+      - KAFKA_CLUSTERS_4_KAFKACONNECT_0_PASSWORD=sr-secret
+      - KAFKA_CLUSTERS_4_PROPERTIES_SECURITY_PROTOCOL=SSL
+      - KAFKA_CLUSTERS_4_PROPERTIES_SSL_TRUSTSTORE_TYPE=JKS
+      - KAFKA_CLUSTERS_4_PROPERTIES_SSL_KEYSTORE_LOCATION=/etc/kafka/secrets/kafka-ui.keystore.jks
+      - KAFKA_CLUSTERS_4_PROPERTIES_SSL_KEYSTORE_PASSWORD=broker_secret
+      - KAFKA_CLUSTERS_4_PROPERTIES_SSL_TRUSTSTORE_LOCATION=/etc/kafka/secrets/kafka.server.truststore.jks
+      - KAFKA_CLUSTERS_4_PROPERTIES_SSL_TRUSTSTORE_PASSWORD=broker_secret
+      - KAFKA_CLUSTERS_4_PROPERTIES_SCHEMA_REGISTRY_BASIC_AUTH_CREDENTIALS_SOURCE=USER_INFO
+      - KAFKA_CLUSTERS_4_PROPERTIES_SCHEMA_REGISTRY_BASIC_AUTH_USER_INFO=sr:sr-secret
+      - KAFKA_CLUSTERS_5_NAME=sasl(oauthbearer)
+      - KAFKA_CLUSTERS_5_BOOTSTRAPSERVERS=oauth-broker-1:9093,oauth-broker-2:9093,oauth-broker-3:9093
+      - KAFKA_CLUSTERS_5_PROPERTIES_SECURITY_PROTOCOL=SASL_SSL
+      - KAFKA_CLUSTERS_5_PROPERTIES_SASL_MECHANISM=OAUTHBEARER
+      - KAFKA_CLUSTERS_5_PROPERTIES_SASL_JAAS_CONFIG=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required tokenUrl="http://hydra:4444/oauth2/token" username="broker-kafka" password="broker-kafka" ;
+      - KAFKA_CLUSTERS_5_PROPERTIES_SASL_LOGIN_CALLBACK_HANDLER_CLASS=dev.buesing.oauth.OauthAuthenticateLoginCallbackHandler
+#      - KAFKA_CLUSTERS_5_PROPERTIES_SSL_KEYSTORE_LOCATION=/etc/kafka/secrets/kafka-ui.keystore.jks
+#      - KAFKA_CLUSTERS_5_PROPERTIES_SSL_KEYSTORE_PASSWORD=broker_secret
+      - KAFKA_CLUSTERS_5_PROPERTIES_SSL_TRUSTSTORE_LOCATION=/etc/kafka/secrets/kafka.server.truststore.jks
+      - KAFKA_CLUSTERS_5_PROPERTIES_SSL_TRUSTSTORE_PASSWORD=broker_secret
+      - KAFKA_CLUSTERS_5_PROPERTIES_SSL_TRUSTSTORE_TYPE=JKS
+      - KAFKA_CLUSTERS_5_ZOOKEEPER=oauth-zookeeper:2181
+      - JAVA_OPTS=-Djavax.net.ssl.trustStore=/etc/kafka/secrets/kafka.server.truststore.jks -Djavax.net.ssl.trustStorePassword=broker_secret

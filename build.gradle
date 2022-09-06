@@ -1,0 +1,24 @@
+plugins {
+    id 'idea'
+}
+
+allprojects {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven {
+            url "https://packages.confluent.io/maven/"
+        }
+        // confluent's schema registry client depends on 'com.github.everit-org.json-schema:org.everit.json.schema'.
+        // the version, for some reason, is not stored on maven central, and mavenrepository.com says it is located
+        // here.
+        maven {
+            url "https://repository.mulesoft.org/nexus/content/repositories/public"
+        }
+    }
+}
+
+subprojects {
+    version = '1.0'
+}
+

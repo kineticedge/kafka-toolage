@@ -1,0 +1,24 @@
+{
+  "name": "datagen-pageviews",
+  "config": {
+    "connector.class": "io.confluent.kafka.connect.datagen.DatagenConnector",
+    "tasks.max": "1",
+    "kafka.topic": "pageviews",
+    "quickstart": "pageviews",
+    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "value.converter": "io.confluent.connect.avro.AvroConverter",
+    "value.converter.schema.registry.url" : "https://ssl-schema-registry:8082",
+    "value.converter.schemas.enable": "true",
+
+    "value.converter.schema.registry.ssl.truststore.location": "/etc/kafka-connect/secrets/kafka.server.truststore.jks",
+    "value.converter.schema.registry.ssl.truststore.password": "broker_secret",
+    "value.converter.basic.auth.credentials.source": "USER_INFO",
+    "value.converter.schema.registry.basic.auth.user.info": "sr:sr-secret",
+
+    "basic.auth.credentials.source": "USER_INFO",
+    "basic.auth.user.info": "sr:sr-secret",
+
+    "max.interval": 100,
+    "iterations": 10000000
+  }
+}

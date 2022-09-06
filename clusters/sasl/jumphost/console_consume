@@ -1,0 +1,8 @@
+#!/bin/sh
+
+kafka-console-consumer \
+ --bootstrap-server broker-1:9093,broker-2:9093,broker-3:9093,broker-4:9093 \
+ --consumer.config ./config/consumer-config.conf \
+ --topic $1 \
+ --from-beginning
+ 

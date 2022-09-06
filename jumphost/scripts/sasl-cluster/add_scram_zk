@@ -1,0 +1,4 @@
+#!/bin/bash
+
+kafka-configs --zookeeper sasl-zookeeper:2181 --alter --add-config 'SCRAM-SHA-512=[password=kafka-ui-secret]' --entity-type users --entity-name kafka-ui
+

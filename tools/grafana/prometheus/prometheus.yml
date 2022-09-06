@@ -1,0 +1,186 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+
+  - job_name: noauth-zookeeper
+    static_configs:
+      - targets:
+        - noauth-zookeeper:7071
+        labels:
+          cluster_type: "zookeeper"
+          cluster_id: "noauth"
+    relabel_configs:
+      - source_labels: [__address__]
+        regex: '(.*):(.*)'
+        target_label: instance
+        replacement: '$1'
+  - job_name: noauth-kafka
+    static_configs:
+      - targets:
+        - noauth-broker-1:7071
+        - noauth-broker-2:7071
+        - noauth-broker-3:7071
+        labels:
+          cluster_type: "kafka"
+          cluster_id: "noauth"
+    relabel_configs:
+      - source_labels: [__address__]
+        regex: '(.*):(.*)'
+        target_label: instance
+        replacement: '$1'
+  - job_name: noauth-schema-registry
+    static_configs:
+      - targets:
+          - noauth-schema-registry:7071
+        labels:
+          cluster_type: "schema-registry"
+          cluster_id: "noauth"
+    relabel_configs:
+      - source_labels: [__address__]
+        regex: '(.*):(.*)'
+        target_label: instance
+        replacement: '$1'
+  - job_name: noauth-connect
+    static_configs:
+      - targets:
+          - noauth-connect:7071
+        labels:
+          cluster_type: "connect"
+          cluster_id: "noauth"
+    relabel_configs:
+      - source_labels: [__address__]
+        regex: '(.*):(.*)'
+        target_label: instance
+        replacement: '$1'
+
+  - job_name: ssl-zookeeper
+    static_configs:
+      - targets:
+          - ssl-zookeeper:7071
+        labels:
+          cluster_type: "zookeeper"
+          cluster_id: "ssl"
+    relabel_configs:
+      - source_labels: [__address__]
+        regex: '(.*):(.*)'
+        target_label: instance
+        replacement: '$1'
+  - job_name: ssl-kafka
+    static_configs:
+      - targets:
+          - ssl-broker-1:7071
+          - ssl-broker-2:7071
+          - ssl-broker-3:7071
+        labels:
+          cluster_type: "kafka"
+          cluster_id: "ssl"
+    relabel_configs:
+      - source_labels: [__address__]
+        regex: '(.*):(.*)'
+        target_label: instance
+        replacement: '$1'
+  - job_name: ssl-schema-registry
+    static_configs:
+      - targets:
+          - ssl-schema-registry:7071
+        labels:
+          cluster_type: "schema-registry"
+          cluster_id: "ssl"
+    relabel_configs:
+      - source_labels: [__address__]
+        regex: '(.*):(.*)'
+        target_label: instance
+        replacement: '$1'
+  - job_name: ssl-connect
+    static_configs:
+      - targets:
+          - ssl-connect:7071
+        labels:
+          cluster_type: "connect"
+          cluster_id: "ssl"
+    relabel_configs:
+      - source_labels: [__address__]
+        regex: '(.*):(.*)'
+        target_label: instance
+        replacement: '$1'
+        
+        
+  - job_name: sasl-zookeeper
+    static_configs:
+      - targets:
+          - sasl-zookeeper:7071
+        labels:
+          cluster_type: "zookeeper"
+          cluster_id: "sasl"
+    relabel_configs:
+      - source_labels: [__address__]
+        regex: '(.*):(.*)'
+        target_label: instance
+        replacement: '$1'
+  - job_name: sasl-kafka
+    static_configs:
+      - targets:
+          - sasl-broker-1:7071
+          - sasl-broker-2:7071
+          - sasl-broker-3:7071
+        labels:
+          cluster_type: "kafka"
+          cluster_id: "sasl"
+    relabel_configs:
+      - source_labels: [__address__]
+        regex: '(.*):(.*)'
+        target_label: instance
+        replacement: '$1'
+  - job_name: sasl-schema-registry
+    static_configs:
+      - targets:
+          - sasl-schema-registry:7071
+        labels:
+          cluster_type: "schema-registry"
+          cluster_id: "sasl"
+    relabel_configs:
+      - source_labels: [__address__]
+        regex: '(.*):(.*)'
+        target_label: instance
+        replacement: '$1'
+  - job_name: sasl-connect
+    static_configs:
+      - targets:
+          - sasl-connect-1:7071
+          - sasl-connect-2:7071
+        labels:
+          cluster_type: "connect"
+          cluster_id: "sasl"
+    relabel_configs:
+      - source_labels: [__address__]
+        regex: '(.*):(.*)'
+        target_label: instance
+        replacement: '$1'
+
+  - job_name: oauth-zookeeper
+    static_configs:
+      - targets:
+          - oauth-zookeeper:7071
+        labels:
+          cluster_type: "zookeeper"
+          cluster_id: "oauth"
+    relabel_configs:
+      - source_labels: [__address__]
+        regex: '(.*):(.*)'
+        target_label: instance
+        replacement: '$1'
+  - job_name: oauth-kafka
+    static_configs:
+      - targets:
+          - oauth-broker-1:7071
+          - oauth-broker-2:7071
+          - oauth-broker-3:7071
+        labels:
+          cluster_type: "kafka"
+          cluster_id: "oauth"
+    relabel_configs:
+      - source_labels: [__address__]
+        regex: '(.*):(.*)'
+        target_label: instance
+        replacement: '$1'

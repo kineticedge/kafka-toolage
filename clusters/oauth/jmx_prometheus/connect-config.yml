@@ -1,0 +1,27 @@
+   
+lowercaseOutputName: true
+lowercaseOutputLabelNames: true
+blacklistObjectNames:
+  # This will ignore the admin client metrics from KSQL server and will blacklist certain metrics
+  # that do not make sense for ingestion.
+  - "kafka.admin.client:*"
+  - "kafka.consumer:type=*,id=*"
+  - "kafka.producer:type=*,id=*"
+  - "kafka.producer:client-id=confluent.monitoring*,*"
+  - "kafka.*:type=kafka-metrics-count,*"
+rules:
+  - pattern: "java.lang<type=(.*)>"
+  - pattern: "kafka.connect<type=connector-metrics, connector=(.+)><>(.+): (.+)"
+    value: 1
+    name: kafka_connect_connector_metrics
+    labels:
+      connector: $1
+      $2: $3
+    type: UNTYPED
+  - pattern: "kafka.connect<type=(.+)><>([^:]+)"
+  - pattern: "kafka.connect<type=(.+), client-id=(.+)><>([^:]+)"
+  - pattern: "kafka.connect<type=(.+), connector=(.+), task=(.+)><>([^:]+)"
+
+kafka:
+  connect:connector=mysql-backup,type=connector-metrics:
+
