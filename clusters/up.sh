@@ -4,45 +4,56 @@ set -e
 
 declare -a clusters=()
 
-if [ $# -gt 0  ]; then
+if [ $# -eq 1 -a "$1" == "all" ]; then
+  clusters=(noauth ssl sasl oauth)
+else
+
+while [ $# -gt 0 ]; do
   case "$1" in
-    all)
-      clusters=(noauth ssl sasl oauth)
-      ;;
     noauth)
-      clusters=(noauth)
+      clusters[${#clusters[@]}]="noauth"
       ;;
     ssl)
-      clusters=(ssl)
+      clusters[${#clusters[@]}]="ssl"
       ;;
     sasl)
-      clusters=(sasl)
+      clusters[${#clusters[@]}]="sasl"
       ;;
     oauth)
+      clusters[${#clusters[@]}]="oauth"
       clusters=(oauth)
       ;;
     *)
-     echo "no such cluster"
+     echo "usage: $0 [noauth] [ssl] [sasl] [oauth]"
      exit
      ;;
   esac
-else
-  echo "usage: $0 [noauth|ssl|sasl|oauth|all]"
+  shift
+done
+
+fi
+
+if [ ${#clusters} -eq 0 ]; then 
+  echo "usage: $0 [all] | [noauth] [ssl] [sasl] [oauth]"
   exit
 fi
 
 #
+# Make sure the jmx_prometheus_javaagent is downloaded in case it needs to be installed.
 #
 #
+# 0.17.0 doesn't seem to work with Kafka, at least not with the cp images.
 
 JMXAGENT_REPO=https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent
 JMXAGENT_VERSION=0.16.1
-
 mkdir -p ./tmp
-
 if [ ! -f "./tmp/jmx_prometheus_javaagent-${JMXAGENT_VERSION}.jar" ]; then
   (cd ./tmp; curl -L -s -O ${JMXAGENT_REPO}/${JMXAGENT_VERSION}/jmx_prometheus_javaagent-${JMXAGENT_VERSION}.jar)
 fi
+
+#
+# make sure jmx_prometheus_javaagent is installed and start the cluster.
+#
 
 for cluster in "${clusters[@]}"; do
 
