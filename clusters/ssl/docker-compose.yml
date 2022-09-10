@@ -216,6 +216,7 @@ services:
       CONFLUENT_METRICS_ENABLE: 'false'
       SCHEMA_REGISTRY_OPTS: >-
         -Djava.security.auth.login.config=/etc/kafka/secrets/sr_jaas.conf
+        -javaagent:/opt/jmx_prometheus/jmx_prometheus_javaagent.jar=7071:/opt/jmx_prometheus/sr-config.yml
       EXTRA_OPTS: >-
         -javaagent:/opt/jmx_prometheus/jmx_prometheus_javaagent.jar=7071:/opt/jmx_prometheus/sr-config.yml
       SCHEMA_REGISTRY_AUTHENTICATION_METHOD: "BASIC"

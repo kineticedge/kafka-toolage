@@ -18,7 +18,7 @@
     "basic.auth.credentials.source": "USER_INFO",
     "basic.auth.user.info": "sr:sr-secret",
 
-    "max.interval": 100,
+    "max.interval": 10,
     "iterations": 10000000
   }
 }

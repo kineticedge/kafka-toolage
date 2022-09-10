@@ -243,6 +243,7 @@ services:
       CONFLUENT_METRICS_ENABLE: 'false'
       SCHEMA_REGISTRY_OPTS: >-
         -Djava.security.auth.login.config=/etc/kafka/secrets/sr_jaas.conf
+        -javaagent:/opt/jmx_prometheus/jmx_prometheus_javaagent.jar=7071:/opt/jmx_prometheus/sr-config.yml
       #KafkaReadyCommand is called prior to SchemaRegistry pulls in jaas credentials from KAFKA_OPTS (or SCHEMA_REGISTRY_KAFKASTORE_SASL_JAAS_CONFIG), but not from SCHEMA_REGISTRY_OPTS
       KAFKA_OPTS: >-
         -Djava.security.auth.login.config=/etc/kafka/secrets/sr_jaas.conf

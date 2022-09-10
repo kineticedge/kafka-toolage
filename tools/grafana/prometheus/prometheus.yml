@@ -41,13 +41,25 @@ scrape_configs:
         regex: '(.*):(.*)'
         target_label: instance
         replacement: '$1'
-  - job_name: noauth-connect
+  - job_name: noauth-connect-a
     static_configs:
       - targets:
-          - noauth-connect:7071
+          - noauth-connect-a:7071
         labels:
           cluster_type: "connect"
-          cluster_id: "noauth"
+          cluster_id: "noauth-a"
+    relabel_configs:
+      - source_labels: [__address__]
+        regex: '(.*):(.*)'
+        target_label: instance
+        replacement: '$1'
+  - job_name: noauth-connect-b
+    static_configs:
+      - targets:
+          - noauth-connect-b:7071
+        labels:
+          cluster_type: "connect"
+          cluster_id: "noauth-b"
     relabel_configs:
       - source_labels: [__address__]
         regex: '(.*):(.*)'

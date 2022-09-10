@@ -8,8 +8,10 @@ grafana.db
 
 /certificates/secrets/*
 
+/clusters/tmp
 /clusters/oauth/oauth-client/build
 /clusters/*/data/*
+/clusters/*/jxm_exporter/jmx_prometheus_javaagent.jar
 
 /clusters/*/secrets/*.jks
 /clusters/*/secrets/kafka.key

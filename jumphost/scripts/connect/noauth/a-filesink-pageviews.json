@@ -1,0 +1,15 @@
+{
+  "name": "filesink-pageviews",
+  "config": {
+    "connector.class": "FileStreamSink",
+    "tasks.max": "1",
+    "topics": "pageviews-a",
+    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+
+    "value.converter": "io.confluent.connect.avro.AvroConverter",
+    "value.converter.schema.registry.url" : "http://noauth-schema-registry:8081",
+    "value.converter.schemas.enable": "true",
+
+    "file": "/data/pageviews-a.txt"
+  }
+}
