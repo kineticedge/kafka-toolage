@@ -384,7 +384,7 @@
             "uid": "P1809F7CD0C75ACF3"
           },
           "exemplar": false,
-          "expr": "sum(kafka_schema_registry_registered_count{cluster_id=~\".*\", cluster_type=\"schema-registry\"})",
+          "expr": "sum(kafka_schema_registry_registered_count{cluster_id=~\"$cluster\", cluster_type=\"schema-registry\"})",
           "instant": true,
           "interval": "",
           "legendFormat": "",
