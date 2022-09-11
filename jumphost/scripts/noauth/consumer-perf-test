@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -e
+cd "$(dirname "$0")"
+. ./_noauth.sh
+
+kafka-consumer-perf-test \
+    --topic "$PERF_TOPIC" \
+    --bootstrap-server "$BOOTSTRAP_SERVER" \
+    --messages 3000000 \
+    --consumer.config "$CONSUMER_CONFIG" | jq -R .| jq -sr 'map(./",")|transpose|map(join(": "))[]'

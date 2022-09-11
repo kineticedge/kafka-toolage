@@ -1,0 +1,29 @@
+#!/bin/bash
+
+set -e
+cd "$(dirname "$0")"
+. ./_sasl.sh
+
+if [ $# -eq 0 ]; then
+  echo "usage: $0 <username>"
+  exit
+fi
+
+USER=$1
+shift
+
+PASSWD="$USER-secret"
+
+echo ""
+echo "creating user=$USER with password=$PASSWD"
+echo ""
+
+kafka-configs \
+  --bootstrap-server "${ADMIN_BOOTSTRAP_SERVER}" \
+  --command-config "${ADMIN_CONFIG}" \
+  --alter \
+  --add-config "SCRAM-SHA-512=[password=${PASSWD}]" \
+  --entity-type users \
+  --entity-name $USER
+
+echo ""

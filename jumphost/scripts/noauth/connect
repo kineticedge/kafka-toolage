@@ -1,0 +1,21 @@
+#!/bin/bash
+
+set -e
+. /scripts/common/config.sh
+cd "$(dirname "$0")"
+
+HOST=http://noauth-connect-a:8083
+$CURL -X DELETE $HOST/connectors/datagen-pageviews | jq
+$CURL -X DELETE $HOST/connectors/filesink-pageviews | jq
+$CURL -X POST   --data @./connectors/a-datagen-pageviews.json $HOST/connectors | jq
+$CURL -X POST   --data @./connectors/a-filesink-pageviews.json $HOST/connectors | jq
+$CURL -X GET    $HOST/connectors/datagen-pageviews/status | jq
+$CURL -X GET    $HOST/connectors/filesink-pageviews/status | jq
+
+HOST=http://noauth-connect-b:8083
+$CURL -X DELETE $HOST/connectors/datagen-pageviews | jq
+$CURL -X DELETE $HOST/connectors/filesink-pageviews | jq
+$CURL -X POST   --data @./connectors/b-datagen-pageviews.json $HOST/connectors | jq
+$CURL -X POST   --data @./connectors/b-filesink-pageviews.json $HOST/connectors | jq
+$CURL -X GET    $HOST/connectors/datagen-pageviews/status | jq
+$CURL -X GET    $HOST/connectors/filesink-pageviews/status | jq

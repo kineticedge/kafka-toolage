@@ -1,0 +1,29 @@
+#!/bin/bash
+
+set -e
+cd "$(dirname "$0")"
+. ./_noauth.sh
+
+
+kafka-topics \
+  --bootstrap-server $ADMIN_BOOTSTRAP_SERVER \
+  --command-config $ADMIN_CONFIG \
+  --create \
+  --if-not-exists \
+  --topic "$PERF_TOPIC" \
+  --replication-factor 3 \
+  --partitions 4
+
+
+NUM_RECORDS=1000000
+RECORD_SIZE=1024
+
+kafka-producer-perf-test \
+    --topic "$PERF_TOPIC" \
+    --throughput -1 \
+    --num-records $NUM_RECORDS \
+    --record-size $RECORD_SIZE \
+    --producer-props \
+        acks=all \
+        bootstrap.servers="$BOOTSTRAP_SERVER" \
+    --producer.config "$PRODUCER_CONFIG"

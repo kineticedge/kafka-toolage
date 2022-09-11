@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set -e
+cd "$(dirname "$0")"
+. ./_ssl.sh
+
+kafka-console-consumer \
+  --bootstrap-server "$BOOTSTRAP_SERVER" \
+  --consumer.config "$CONSUMER_CONFIG" \
+  --from-beginning \
+  --topic "$@"
+
