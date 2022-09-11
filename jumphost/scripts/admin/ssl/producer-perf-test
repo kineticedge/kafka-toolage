@@ -4,6 +4,8 @@ set -e
 . /scripts/common/config.sh
 cd "$(dirname "$0")"
 
+TOPIC=ssl-perf
+
 CLUSTER=ssl
 PROTOCOL=ssl
 BOOTSTRAP_SERVER=$CLUSTER-broker-1:9093,$CLUSTER-broker-2:9093,$CLUSTER-broker-3:9093
@@ -11,7 +13,25 @@ ADMIN_CONFIG=./config/admin-$PROTOCOL.config
 PRODUCER_CONFIG=./config/producer-$PROTOCOL.config
 CONSUMER_CONFIG=./config/consumer-$PROTOCOL.config
 
+
 kafka-topics \
   --bootstrap-server $BOOTSTRAP_SERVER \
   --command-config $ADMIN_CONFIG \
-  "$@"
+  --create \
+  --if-not-exists \
+  --topic $TOPIC \
+  --replication-factor 3 \
+  --partitions 4
+
+NUM_RECORDS=1000000
+RECORD_SIZE=1024
+
+kafka-producer-perf-test \
+    --topic $TOPIC \
+    --throughput -1 \
+    --num-records $NUM_RECORDS \
+    --record-size $RECORD_SIZE \
+    --producer-props \
+        acks=all \
+        bootstrap.servers=$BOOTSTRAP_SERVER \
+    --producer.config $PRODUCER_CONFIG

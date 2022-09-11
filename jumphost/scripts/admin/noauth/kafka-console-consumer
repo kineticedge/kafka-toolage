@@ -2,7 +2,7 @@
 
 kafka-console-consumer \
   --bootstrap-server noauth-broker-1:9093,noauth-broker-2:9093,noauth-broker-3:9093 \
-  --consumer.config ./admin.config \
+  --consumer.config ./config/admin.config \
   --from-beginning \
   --topic "$@"
 

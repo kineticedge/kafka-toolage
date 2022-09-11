@@ -19,4 +19,5 @@ services:
     volumes:
       - ./secrets:/etc/kafka/secrets
       - ./scripts:/scripts
+      - ./jars/kafka-auth0-1.0.0-all.jar:/usr/share/java/kafka/kafka-auth0-1.0.0-all.jar
     entrypoint: /bin/bash -c "sleep infinity"

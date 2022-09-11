@@ -1,4 +1,0 @@
-#!/bin/bash
-
-kafka-configs --bootstrap-server sasl-broker-1:9092 --command-config ./admin.config  --alter --add-config 'SCRAM-SHA-256=[password=kafka-ui-secret],SCRAM-SHA-512=[password=kafka-ui-secret]' --entity-type users --entity-name kafka-ui
-

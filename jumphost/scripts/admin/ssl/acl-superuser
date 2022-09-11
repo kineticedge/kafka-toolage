@@ -1,7 +1,7 @@
 #!/bin/bash
 
 BOOTSTRAP_SERVER=ssl-broker-1:9093,ssl-broker-2:9093,ssl-broker-3:9093
-CONFIG_FILE=./admin.config
+CONFIG_FILE=./config/admin-ssl.config
 
 if [ $# -ne 1 ]; then 
   echo ""
@@ -15,6 +15,7 @@ USERNAME=$1
 shift
 
 COMMAND="--add"
+# to delete acl replace `--add` with `--remove`
 
 echo ""
 echo "providing full cluster access to ${USERNAME}"
@@ -25,10 +26,10 @@ kafka-acls \
 	--command-config ${CONFIG_FILE} \
 	${COMMAND} \
 	--force \
-	--allow-principal User:${USERNAME} \
+	--allow-principal "User:${USERNAME}" \
 	--operation All \
 	--topic '*' \
 	--group '*' \
 	--cluster
 
-# to delete acl replace `--add` with `--remove`
+echo ""
