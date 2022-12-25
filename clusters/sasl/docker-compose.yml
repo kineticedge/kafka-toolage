@@ -22,7 +22,7 @@ volumes:
 services:
 
   sasl-zookeeper:
-    image: confluentinc/cp-zookeeper:7.2.0
+    image: confluentinc/cp-zookeeper:${VERSION}
     hostname: sasl-zookeeper
     container_name: sasl-zookeeper
     healthcheck:
@@ -48,7 +48,7 @@ services:
       KAFKA_LOG4J_ROOT_LOGLEVEL: WARN
 
   sasl-broker-1:
-    image: confluentinc/cp-kafka:7.2.0
+    image: confluentinc/cp-kafka:${VERSION}
     hostname: sasl-broker-1
     container_name: sasl-broker-1
     stop_grace_period: 120s
@@ -86,7 +86,7 @@ services:
       KAFKA_SSL_TRUSTSTORE_FILENAME: kafka.server.truststore.jks
       KAFKA_AUTHORIZER_CLASS_NAME: kafka.security.authorizer.AclAuthorizer
       KAFKA_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "false"
-      KAFKA_SUPER_USERS: User:kafka-admin;User:kafka-broker
+      KAFKA_SUPER_USERS: User:kafka-admin;User:kafka-broker;User:kafka-broker-v2
       KAFKA_OPTS: >-
         -Djava.security.auth.login.config=/etc/kafka/secrets/broker_jaas.conf
         -javaagent:/opt/jmx_prometheus/jmx_prometheus_javaagent.jar=7071:/opt/jmx_prometheus/kafka-config.yml
@@ -101,7 +101,7 @@ services:
       KAFKA_ZOOKEEPER_SET_ACL: 'false'
 
   sasl-broker-2:
-    image: confluentinc/cp-kafka:7.2.0
+    image: confluentinc/cp-kafka:${VERSION}
     hostname: sasl-broker-2
     container_name: sasl-broker-2
     stop_grace_period: 120s
@@ -155,7 +155,7 @@ services:
 
 
   sasl-broker-3:
-    image: confluentinc/cp-kafka:7.2.0
+    image: confluentinc/cp-kafka:${VERSION}
     hostname: sasl-broker-3
     container_name: sasl-broker-3
     stop_grace_period: 120s
@@ -208,7 +208,7 @@ services:
       KAFKA_ZOOKEEPER_SET_ACL: 'false'
 
   sasl-schema-registry:
-    image: confluentinc/cp-schema-registry:7.2.0
+    image: confluentinc/cp-schema-registry:${VERSION}
     hostname: sasl-schema-registry
     container_name: sasl-schema-registry
     stop_grace_period: 120s
@@ -261,7 +261,7 @@ services:
 
 
   sasl-connect-1:
-    image: confluentinc/cp-kafka-connect:7.2.0
+    image: confluentinc/cp-kafka-connect:${VERSION}
     hostname: sasl-connect-1
     container_name: sasl-connect-1
     healthcheck:
@@ -336,7 +336,7 @@ services:
         -Djavax.net.debug=ssl:trustmanager,session,handshake:verbose
 
   sasl-connect-2:
-    image: confluentinc/cp-kafka-connect:7.2.0
+    image: confluentinc/cp-kafka-connect:${VERSION}
     hostname: sasl-connect-2
     container_name: sasl-connect-2
     healthcheck:

@@ -1,12 +1,12 @@
 {
-  "name": "datagen-pageviews",
+  "name": "a-datagen-pageviews",
   "config": {
     "connector.class": "io.confluent.kafka.connect.datagen.DatagenConnector",
     "tasks.max": "1",
     "kafka.topic": "pageviews-a",
     "quickstart": "pageviews",
     "key.converter": "org.apache.kafka.connect.storage.StringConverter",
-    "value.converter": "io.confluent.connect.avro.AvroConverter",
+    "value.converter": "io.confluent.connect.protobuf.ProtobufConverter",
     "value.converter.schema.registry.url" : "http://noauth-schema-registry:8081",
     "value.converter.schemas.enable": "true",
 

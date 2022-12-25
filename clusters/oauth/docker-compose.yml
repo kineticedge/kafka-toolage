@@ -17,7 +17,7 @@ volumes:
 services:
 
   oauth-zookeeper:
-    image: confluentinc/cp-zookeeper:7.2.0
+    image: confluentinc/cp-zookeeper:${VERSION}
     hostname: oauth-zookeeper
     container_name: oauth-zookeeper
     healthcheck:
@@ -44,7 +44,7 @@ services:
       KAFKA_LOG4J_ROOT_LOGLEVEL: WARN
 
   oauth-broker-1:
-    image: confluentinc/cp-kafka:7.2.0
+    image: confluentinc/cp-kafka:${VERSION}
     hostname: oauth-broker-1
     container_name: oauth-broker-1
     stop_grace_period: 120s
@@ -129,7 +129,7 @@ services:
       OAUTH_INTROSPECT_AUTHORIZATION : "Basic YnJva2VyLWthZmthOmJyb2tlci1rYWZrYQ=="
 
   oauth-broker-2:
-    image: confluentinc/cp-kafka:7.2.0
+    image: confluentinc/cp-kafka:${VERSION}
     hostname: oauth-broker-2
     container_name: oauth-broker-2
     stop_grace_period: 120s
@@ -187,7 +187,7 @@ services:
       KAFKA_LISTENER_NAME_EXTERNAL__SSL_OAUTHBEARER_SASL_SERVER_CALLBACK_HANDLER_CLASS: dev.buesing.oauth.OauthAuthenticateValidatorCallbackHandler
 
   oauth-broker-3:
-    image: confluentinc/cp-kafka:7.2.0
+    image: confluentinc/cp-kafka:${VERSION}
     hostname: oauth-broker-3
     container_name: oauth-broker-3
     stop_grace_period: 120s

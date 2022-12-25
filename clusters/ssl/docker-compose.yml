@@ -19,7 +19,7 @@ volumes:
 services:
 
   ssl-zookeeper:
-    image: confluentinc/cp-zookeeper:7.2.0
+    image: confluentinc/cp-zookeeper:${VERSION}
     hostname: ssl-zookeeper
     container_name: ssl-zookeeper
     healthcheck:
@@ -41,7 +41,7 @@ services:
         -javaagent:/opt/jmx_prometheus/jmx_prometheus_javaagent.jar=7071:/opt/jmx_prometheus/zookeeper-config.yml
 
   ssl-broker-1:
-    image: confluentinc/cp-kafka:7.2.0
+    image: confluentinc/cp-kafka:${VERSION}
     hostname: ssl-broker-1
     container_name: ssl-broker-1
     healthcheck:
@@ -84,7 +84,7 @@ services:
       KAFKA_LOG4J_ROOT_LOGLEVEL: INFO
 
   ssl-broker-2:
-    image: confluentinc/cp-kafka:7.2.0
+    image: confluentinc/cp-kafka:${VERSION}
     hostname: ssl-broker-2
     container_name: ssl-broker-2
     healthcheck:
@@ -127,7 +127,7 @@ services:
       KAFKA_LOG4J_ROOT_LOGLEVEL: INFO
 
   ssl-broker-3:
-    image: confluentinc/cp-kafka:7.2.0
+    image: confluentinc/cp-kafka:${VERSION}
     hostname: ssl-broker-3
     container_name: ssl-broker-3
     healthcheck:
@@ -181,7 +181,7 @@ services:
       #SCHEMA_REGISTRY_AUTHENTICATION_REALM: SchemaRegistry
 
   ssl-schema-registry:
-    image: confluentinc/cp-schema-registry:7.2.0
+    image: confluentinc/cp-schema-registry:${VERSION}
     hostname: ssl-schema-registry
     container_name: ssl-schema-registry
     stop_grace_period: 120s
@@ -230,7 +230,7 @@ services:
 
 
   ssl-connect:
-    image: confluentinc/cp-kafka-connect:7.2.0
+    image: confluentinc/cp-kafka-connect:${VERSION}
     hostname: ssl-connect
     container_name: ssl-connect
     healthcheck:

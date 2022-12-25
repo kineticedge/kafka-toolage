@@ -2,6 +2,8 @@
 
 set -e
 
+cd "$(dirname "$0")"
+
 declare -a clusters=()
 
 if [ $# -eq 1 -a "$1" == "all" ]; then
@@ -37,6 +39,11 @@ if [ ${#clusters} -eq 0 ]; then
   echo "usage: $0 [all] | [noauth] [ssl] [sasl] [oauth]"
   exit
 fi
+
+#
+# Make sure Network is established
+#
+../network.sh
 
 #
 # Make sure the jmx_prometheus_javaagent is downloaded in case it needs to be installed.

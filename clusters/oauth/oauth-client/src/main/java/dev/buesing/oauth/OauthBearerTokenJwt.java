@@ -51,6 +51,7 @@ public class OauthBearerTokenJwt implements OAuthBearerToken {
         }else{
             this.expirationTime = (Long) jwtToken.get("exp");
         }
+        this.expirationTime *= 1000L; // jwt in seconds, need to adjust to ms
 
         Object iat = jwtToken.get("iat");
         if(exp instanceof Integer){
@@ -58,6 +59,7 @@ public class OauthBearerTokenJwt implements OAuthBearerToken {
         }else{
             this.startTimeMs = (Long) jwtToken.get("iat");
         }
+        this.startTimeMs *= 1000L; // jwt in seconds, need to adjust to ms
 
         this.lifetimeMs = expirationTime;
         this.jti = (String) jwtToken.get("jti");

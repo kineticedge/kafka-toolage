@@ -1,5 +1,5 @@
 {
-  "name": "filesink-pageviews",
+  "name": "b-filesink-pageviews",
   "config": {
     "connector.class": "FileStreamSink",
     "tasks.max": "1",

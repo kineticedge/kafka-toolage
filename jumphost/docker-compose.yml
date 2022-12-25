@@ -7,7 +7,7 @@ networks:
 
 services:
   jumphost:
-    image: confluentinc/cp-kafka:7.2.0
+    image: confluentinc/cp-kafka:${VERSION}
     hostname: jumphost
     container_name: jumphost
     healthcheck:

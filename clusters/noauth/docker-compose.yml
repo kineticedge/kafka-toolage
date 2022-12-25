@@ -21,7 +21,7 @@ volumes:
 services:
 
   noauth-zookeeper:
-    image: confluentinc/cp-zookeeper:7.2.0
+    image: confluentinc/cp-zookeeper:${VERSION}
     hostname: noauth-zookeeper
     container_name: noauth-zookeeper
     healthcheck:
@@ -43,7 +43,7 @@ services:
         -javaagent:/opt/jmx_prometheus/jmx_prometheus_javaagent.jar=7071:/opt/jmx_prometheus/zookeeper-config.yml
 
   noauth-broker-1:
-    image: confluentinc/cp-kafka:7.2.0
+    image: confluentinc/cp-kafka:${VERSION}
     hostname: noauth-broker-1
     container_name: noauth-broker-1
     healthcheck:
@@ -82,7 +82,7 @@ services:
       KAFKA_LOG4J_ROOT_LOGLEVEL: INFO
 
   noauth-broker-2:
-    image: confluentinc/cp-kafka:7.2.0
+    image: confluentinc/cp-kafka:${VERSION}
     hostname: noauth-broker-2
     container_name: noauth-broker-2
     healthcheck:
@@ -121,7 +121,7 @@ services:
       KAFKA_LOG4J_ROOT_LOGLEVEL: INFO
 
   noauth-broker-3:
-    image: confluentinc/cp-kafka:7.2.0
+    image: confluentinc/cp-kafka:${VERSION}
     hostname: noauth-broker-3
     container_name: noauth-broker-3
     healthcheck:
@@ -160,7 +160,7 @@ services:
       KAFKA_LOG4J_ROOT_LOGLEVEL: INFO
 
   noauth-schema-registry:
-    image: confluentinc/cp-schema-registry:7.2.0
+    image: confluentinc/cp-schema-registry:${VERSION}
     hostname: noauth-schema-registry
     container_name: noauth-schema-registry
     stop_grace_period: 120s
@@ -193,7 +193,7 @@ services:
 
 
   noauth-connect-a:
-    image: confluentinc/cp-kafka-connect:7.2.0
+    image: confluentinc/cp-kafka-connect:${VERSION}
     hostname: noauth-connect-a
     container_name: noauth-connect-a
     healthcheck:
@@ -249,7 +249,7 @@ services:
         -javaagent:/opt/jmx_prometheus/jmx_prometheus_javaagent.jar=7071:/opt/jmx_prometheus/connect-config.yml
 
   noauth-connect-b:
-    image: confluentinc/cp-kafka-connect:7.2.0
+    image: confluentinc/cp-kafka-connect:${VERSION}
     hostname: noauth-connect-b
     container_name: noauth-connect-b
     healthcheck:
@@ -284,6 +284,12 @@ services:
       CONNECT_SECURITY_PROTOCOL: SSL
       CONNECT_SSL_TRUSTSTORE_LOCATION: /etc/kafka-connect/secrets/kafka.server.truststore.jks
       CONNECT_SSL_TRUSTSTORE_PASSWORD: broker_secret
+      CONNECT_PRODUCER_SECURITY_PROTOCOL: SSL
+      CONNECT_PRODUCER_SSL_TRUSTSTORE_LOCATION: /etc/kafka-connect/secrets/kafka.server.truststore.jks
+      CONNECT_PRODUCER_SSL_TRUSTSTORE_PASSWORD: broker_secret
+      CONNECT_CONSUMER_SECURITY_PROTOCOL: SSL
+      CONNECT_CONSUMER_SSL_TRUSTSTORE_LOCATION: /etc/kafka-connect/secrets/kafka.server.truststore.jks
+      CONNECT_CONSUMER_SSL_TRUSTSTORE_PASSWORD: broker_secret
       CONNECT_CONNECTOR_CLIENT_CONFIG_OVERRIDE_POLICY: All
       CONNECT_REST_PORT: 8083
       CONNECT_GROUP_ID: 'connect-b'

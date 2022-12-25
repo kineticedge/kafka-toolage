@@ -1,5 +1,5 @@
 {
-  "name": "datagen-pageviews",
+  "name": "b-datagen-pageviews",
   "config": {
     "connector.class": "io.confluent.kafka.connect.datagen.DatagenConnector",
     "tasks.max": "1",

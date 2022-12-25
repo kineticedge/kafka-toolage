@@ -1,4 +1,5 @@
 FROM oryd/hydra:v1.11.7
+#FROM oryd/hydra:v2.0.3
 
 ENV     \
         DSN="sqlite:///var/lib/sqlite/db.sqlite?_fk=true" \
