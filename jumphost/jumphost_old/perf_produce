@@ -1,0 +1,20 @@
+#!/bin/sh
+
+if [ $# -lt 1 ]; then
+  echo "usage: $0 topic"
+  exit -1
+fi
+
+export BOOTSTRAP_SERVERS=broker-1:9093,broker-2:9093,broker-3:9093,broker-4:9093
+
+kafka-producer-perf-test \
+  --num-records 500000 \
+  --record-size 1000 \
+  --throughput -1 \
+  --producer.config ./config/producer-config.conf \
+  --producer-props \
+    bootstrap.servers=${BOOTSTRAP_SERVERS} \
+    acks=1 \
+    request.timeout.ms=60000 \
+    retries=2147483647 \
+  --topic $1

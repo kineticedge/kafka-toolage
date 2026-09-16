@@ -1,0 +1,6 @@
+#!/bin/sh
+
+kafka-console-producer \
+ --broker-list broker-1:9092,broker-2:9092,broker-3:9092,broker-4:9092 \
+ --topic $1
+ 

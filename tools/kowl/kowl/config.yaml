@@ -1,0 +1,15 @@
+kafka:
+  brokers:
+    - sasl-broker-1:9092
+    - sasl-broker-2:9092
+    - sasl-broker-3:9092
+  sasl:
+    enabled: true
+    username: kafka-admin
+    password: kafka-admin-secret
+    mechanism: PLAIN
+
+server:
+  setBasePathFromXForwardedPrefix: true
+#  basePath: /sasl-cluster
+#  stripPrefix: false

@@ -1,0 +1,20 @@
+#!/bin/sh
+
+kafka-acls \
+ --bootstrap-server broker-1:9093,broker-2:9093,broker-3:9093,broker-4:9093 \
+ --command-config ./config/adminclient-config.conf \
+ --add \
+ --allow-principal User:CN=jumphost \
+ --allow-host '*' \
+ --operation READ \
+ --operation WRITE \
+ --topic $1
+
+kafka-acls \
+ --bootstrap-server broker-1:9093,broker-2:9093,broker-3:9093,broker-4:9093 \
+ --command-config ./config/adminclient-config.conf \
+ --add \
+ --allow-principal User:CN=jumphost \
+ --allow-host '*' \
+ --operation ALL \
+ --group '*' 

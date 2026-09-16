@@ -1,0 +1,12 @@
+#!/bin/bash
+
+kafka-topics \
+  --bootstrap-server broker-1:9093,broker-2:9093,broker-3:9093 \
+  --command-config ./config/adminclient-config.conf \
+  --replication-factor 3 \
+  --partitions 10 \
+  --topic $1 \
+  --create \
+  --config \
+    retention.bytes=3000000000 \
+    retention.ms=900000

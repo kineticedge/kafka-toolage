@@ -1,0 +1,35 @@
+#!/bin/bash
+
+set -e
+cd "$(dirname "$0")"
+. ./_ssl.sh
+
+if [ $# -ne 1 ]; then 
+  echo ""
+  echo "usage: $0 username"
+  echo ""
+  exit
+fi
+
+USERNAME=$1
+shift
+
+COMMAND="--add"
+# to delete acl replace `--add` with `--remove`
+
+echo ""
+echo "providing full cluster access to ${USERNAME}"
+echo ""
+
+kafka-acls \
+	--bootstrap-server "${ADMIN_BOOTSTRAP_SERVER}" \
+	--command-config "${ADMIN_CONFIG}" \
+	${COMMAND} \
+	--force \
+	--allow-principal "User:${USERNAME}" \
+	--operation All \
+	--topic '*' \
+	--group '*' \
+	--cluster
+
+echo ""

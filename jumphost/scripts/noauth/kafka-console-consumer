@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+cd "$(dirname "$0")"
+. ./_noauth.sh
+
+kafka-console-consumer \
+  --bootstrap-server "$BOOSTRAP_SERVER" \
+  --consumer.config "$CONSUMER_CONFIG" \
+  --from-beginning \
+  --topic "$@"

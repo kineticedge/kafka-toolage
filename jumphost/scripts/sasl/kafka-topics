@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -e
+cd "$(dirname "$0")"
+. ./_sasl.sh
+
+kafka-topics \
+  --bootstrap-server "$ADMIN_BOOTSTRAP_SERVER" \
+  --command-config "$ADMIN_CONFIG" \
+  "$@"
+
